@@ -1,0 +1,379 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Contoh App",
+    "description": "This is a Users CRUD API \n\nPOST /api/user/login - login user & mendapatkan token \n\nPOST /api/user/register - register new user \n\nPUT /api/user/update - update existing user \n\nGET /api/user/data/:id - get user data by id \n\nDELETE /api/user/delete/:id - delete user by id \n\nGET /api/user/whoami - get this user data",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "didil.mfs@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "https://localhost/api/user"
+    }
+  ],
+  "tags": [
+    {
+      "name": "user",
+      "description": "CRUD users",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": ["user"],
+        "summary": "Login user",
+        "description": "Login user",
+        "operationId": "loginUser",
+        "requestBody": {
+          "description": "login user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/login"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/login"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/login"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful post operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/login_success"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/login_success"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "tags": ["user"],
+        "summary": "Create user",
+        "description": "Create new user",
+        "operationId": "addUser",
+        "requestBody": {
+          "description": "Create new user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/user_register"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/user_register"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/user_register"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful post operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/user_register_success"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/user_register_success"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/{id}": {
+      "get": {
+        "tags": ["user"],
+        "summary": "Get user data by id",
+        "description": "Returns one user data",
+        "operationId": "getuserById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Get user Data",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful get operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/users"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/users"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/update": {
+      "put": {
+        "tags": ["user"],
+        "summary": "Update an existing user",
+        "description": "Update an existing user data",
+        "operationId": "updateUser",
+        "requestBody": {
+          "description": "Update an existent user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/users"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/users"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/users"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful update operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/users"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/users"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/delete/{id}": {
+      "delete": {
+        "tags": ["user"],
+        "summary": "Delete user data by id",
+        "description": "Returns deleted user data",
+        "operationId": "deleteuserById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "user that need to be delete",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful delete operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/users"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/users"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "user_register": {
+        "required": ["username", "password"],
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "didil",
+            "uniqueItems": true
+          },
+          "password": {
+            "type": "string",
+            "example": "didil"
+          },
+          "fullname": {
+            "type": "string",
+            "example": "Muhammad Fadhilah Sukmojatmiko"
+          },
+          "role": {
+            "type": "string",
+            "example": "User"
+          }
+        },
+        "xml": {
+          "name": "users"
+        }
+      },
+      "user_register_success": {
+        "required": ["username", "password"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "uniqueItems": true,
+            "example": 10
+          },
+          "username": {
+            "type": "string",
+            "example": "didil",
+            "uniqueItems": true
+          },
+          "password": {
+            "type": "string",
+            "example": "$2b$10$NvqFiAcJ/Jv4HzNLNOvSL.it59HHXAtn48M8ziEsn3IE3Mou7ItzS"
+          },
+          "fullname": {
+            "type": "string",
+            "example": "Muhammad Fadhilah Sukmojatmiko"
+          },
+          "role": {
+            "type": "string",
+            "example": "User"
+          }
+        },
+        "xml": {
+          "name": "users"
+        }
+      },
+      "users": {
+        "required": ["username", "password"],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "uniqueItems": true,
+            "example": 10
+          },
+          "username": {
+            "type": "string",
+            "example": "didil",
+            "uniqueItems": true
+          },
+          "password": {
+            "type": "string",
+            "example": "didil"
+          },
+          "fullname": {
+            "type": "string",
+            "example": "Muhammad Fadhilah Sukmojatmiko"
+          },
+          "role": {
+            "type": "string",
+            "example": "User"
+          }
+        },
+        "xml": {
+          "name": "users"
+        }
+      },
+      "login": {
+        "required": ["username", "password"],
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "didil",
+            "uniqueItems": true
+          },
+          "password": {
+            "type": "string",
+            "example": "didil"
+          }
+        },
+        "xml": {
+          "name": "users"
+        }
+      },
+      "login_success": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJkaWRpbCIsInJvbGUiOiJVc2VyIiwiaWF0IjoxNjYwOTIxOTY5fQ.gdOjOsJMEuD7BnbEze6idnMQMlWH9MeDvrGmPecDL78",
+            "uniqueItems": true
+          }
+        },
+        "xml": {
+          "name": "users"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+stages:
+  - build
+  - deploy
+
+build-job:
+  stage: build
+  image: gitlab/dind
+  services:
+  - docker:dind
+  script:
+    - export IMAGE_TAG=$CI_COMMIT_BRANCH-$CI_COMMIT_SHORT_SHA-$(date +%s)
+    - echo $IMAGE_TAG > build.env
+    - docker login -u $DOCKER_REGISTRY_USER -p $DOCKER_REGISTRY_PASSWORD
+    - docker build -t didilmfs/contoh-app:$IMAGE_TAG .
+    - docker push didilmfs/contoh-app:$IMAGE_TAG
+  artifacts:
+    paths:
+      - build.env
+
+deploy-job:
+  stage: deploy
+  script:
+    - export IMAGE_TAG=$(cat build.env)
+    - echo $IMAGE_TAG
+    - echo "Deploying application..."
+    - curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash
+    - mv kustomize /usr/local/bin/
+    - cd ..
+    - ls -lah
+    - git clone https://oauth2:$ACCESS_TOKEN@gitlab.com/didil.mfs/contoh-app-k8s-manifest.git
+    - ls -lah contoh-app-k8s-manifest
+    - pushd contoh-app-k8s-manifest/overlay/production/contoh-app/
+    - kustomize edit set image didilmfs/contoh-app:$IMAGE_TAG
+    - git config --global user.email "image-update@contoh-app"
+    - git config --global user.name "Image Auto Update"
+    - git commit -am "contoh-app image update to didilmfs/contoh-app:$IMAGE_TAG"
+    - git push origin main
+    - echo "Application successfully deployed."

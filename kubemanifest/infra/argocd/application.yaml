@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: https://gitlab.com/didil.mfs/contoh-app-k8s-manifest
+    path: infra/argocd
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: contoh-app
+#   namespace: contoh-app-ns
+# spec:
+#   destination:
+#     namespace: contoh-app-ns
+#     server: https://kubernetes.default.svc
+#   project: default
+#   source:
+#     repoURL: https://gitlab.com/didil.mfs/contoh-app-k8s-manifest
+#     path: overlay/production/contoh-app
+#     targetRevision: HEAD
+#   syncPolicy:
+#     automated:
+#       prune: true
+#       selfHeal: true

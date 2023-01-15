@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  labels:
+    app: app
+spec:
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+      - name: app
+        image: didilmfs/contoh-app:v1.0.0
+        envFrom:
+        - secretRef:
+            name: secret-env
+        volumeMounts:
+          - name: config-json
+            mountPath: "/usr/src/app/config/"
+        resources:
+          requests:
+            memory: "1024Mi"
+            cpu: "0.5"
+          limits:
+            memory: "1024Mi"
+        livenessProbe:
+          httpGet:
+            path: /docs
+            port: 2022
+        readinessProbe:
+          httpGet:
+            path: /docs
+            port: 2022
+      volumes:
+        - name: config-json
+          secret:
+            secretName: config-json-secret
