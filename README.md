@@ -1,10 +1,10 @@
 # CI/CD Kubernetes
-The following is a guide for creating CI/CD Kubernetes. We use GitOps pull-based model. 
+This is a guide for creating CI/CD Kubernetes. We use GitOps pull-based model. 
 
 Tech Stack:
 - GitLab
 - ArgoCD
-- Kubernetes (Kind)
+- Kubernetes
 - Kustomize
 - SOPS
 
