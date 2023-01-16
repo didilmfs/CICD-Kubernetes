@@ -19,7 +19,7 @@ Tech Stack:
    - Commit and Push to Kubernetes Manifest Repository
 3. Argo CD Synchronize and Deploy Manifest
 
-The workflow is like the diagram below, We don't use HELM but Kustomize.
+The workflow is like the diagram below. (We don't use HELM, we use Kustomize).
 ![alt text](https://miro.medium.com/max/1400/1*9q37KuHZFWC7XOZRSQpJ6Q.png)
 
 ### Repository
